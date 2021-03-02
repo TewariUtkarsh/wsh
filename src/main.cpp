@@ -1,10 +1,3 @@
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#define GetCurrentDir getcwd
-#endif
-
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -20,29 +13,31 @@ void help() {
     std::cout << "This shell rewrite to a2p1k02" << std::endl;
 }
 
-/*This Function Returns the Current Working Directory*/
-std::string get_current_dir() {
+/*This Function Prints the Current Working Directory*/
+void get_cwd()  
+{
+    char s[100]; 
 
-   char buff[FILENAME_MAX];     // Creates a String Buffer to hold path
-   GetCurrentDir( buff, FILENAME_MAX );
-   std::string current_working_dir(buff);
-   return current_working_dir;
+    std :: cout << getcwd(s, 100) << std :: endl; 
 }
 
-/*This Function is used to Change the Directory*/
+/*This Function Changes the Directory*/
 void change_dir()
 {
-    char ch_dir[FILENAME_MAX];
-    std::cin >> ch_dir;     // Input Format: C:\Windows OR any other Directory
-    chdir(ch_dir);
+    char dir[100];
+    std :: cout << "Enter the Dirctory: ";
+    std :: cin >> dir;  // Input Format Example: C:\Windows
+    chdir(dir); 
+  
 }
 
 int main() {
     std::string line;
     std::string args = line.substr(3, line.find(" "));
     
-    change_dir();   // Calls the Function to change the Directory
-    std::cout << get_current_dir() << std::endl;    // get_current_dir() Function is Called
+    get_cwd();      // Calling Function to Print Current Working Directory 
+    change_dir();   // Calling Function to Change the Directory 
+    get_cwd();
     
     while(true) {
         gethostname(hostname, 1024);
